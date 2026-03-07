@@ -3,939 +3,1005 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Northeast Navigator – Tours & Travels</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<title>Northeast Navigator – Authentic Northeast India Tours</title>
+<meta name="description" content="Explore the 8 sister states of Northeast India with Northeast Navigator. Kaziranga, Tawang, Dawki, Hornbill Festival and more.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;font-size:16px;}
 :root{
-  --ink:#0b1610;
-  --forest:#183220;
-  --moss:#2a5235;
-  --gold:#c9a84c;
-  --amber:#e2c26a;
-  --cream:#f6f1e8;
+  --ink:#07110c;
+  --forest:#0f2018;
+  --moss:#183322;
+  --sage:#2e5c3a;
+  --gold:#c49a2e;
+  --gold2:#e0bb5a;
+  --cream:#f2ead8;
+  --offwhite:#e8dfc8;
+  --muted:rgba(242,234,216,0.55);
 }
 body{font-family:'Outfit',sans-serif;background:var(--ink);color:var(--cream);overflow-x:hidden;cursor:none;}
 
 /* CURSOR */
-#C1,#C2{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
-#C1{width:9px;height:9px;background:var(--gold);transition:transform .1s ease;}
-#C2{width:38px;height:38px;border:1.5px solid rgba(201,168,76,.5);transition:width .25s,height .25s;}
-.hov #C1{transform:translate(-50%,-50%) scale(2);}
-.hov #C2{width:58px;height:58px;}
+#cur-dot,#cur-ring{position:fixed;border-radius:50%;pointer-events:none;z-index:9999;top:0;left:0;will-change:transform;}
+#cur-dot{width:7px;height:7px;background:var(--gold);transform:translate(-50%,-50%);}
+#cur-ring{width:32px;height:32px;border:1.5px solid rgba(196,154,46,.5);transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s;}
+body.hov #cur-ring{width:52px;height:52px;border-color:var(--gold);}
+
+/* PAGE SYSTEM */
+.page{display:none;animation:fadeIn .5s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 /* NAV */
-nav{
-  position:fixed;top:0;width:100%;z-index:500;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:30px 64px;
-  transition:padding .4s,background .4s,backdrop-filter .4s;
-}
-nav.stuck{padding:16px 64px;background:rgba(11,22,16,.92);backdrop-filter:blur(20px);}
-.logo{text-decoration:none;display:flex;align-items:center;gap:10px;}
-.logo-mark{
-  width:36px;height:36px;background:linear-gradient(135deg,var(--moss),var(--gold));
-  border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
-}
-.logo-name{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:3.5px;color:var(--cream);}
+nav{position:fixed;top:0;width:100%;z-index:800;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;transition:all .4s;}
+nav.stuck{padding:12px 60px;background:rgba(7,17,12,.95);backdrop-filter:blur(24px);border-bottom:1px solid rgba(196,154,46,.12);}
+.logo{text-decoration:none;display:flex;align-items:center;gap:14px;cursor:none;}
+.logo-icon{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--moss),var(--gold));display:flex;align-items:center;justify-content:center;font-size:17px;}
+.logo-name{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:4px;color:var(--cream);}
 .logo-name span{color:var(--gold);}
-.nav-links{display:flex;gap:38px;list-style:none;}
-.nav-links a{
-  text-decoration:none;color:rgba(246,241,232,.7);
-  font-size:11.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
-  cursor:none;transition:color .2s;position:relative;
-}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s;}
-.nav-links a:hover{color:var(--gold);}
-.nav-links a:hover::after{width:100%;}
-.nav-book{background:var(--gold);color:var(--ink) !important;padding:10px 28px;font-weight:600 !important;cursor:none;}
-.nav-book::after{display:none !important;}
+.nav-links{display:flex;gap:36px;list-style:none;align-items:center;}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:10.5px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;cursor:none;transition:color .25s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-cta{background:var(--gold)!important;color:var(--ink)!important;padding:10px 26px!important;font-weight:700!important;letter-spacing:1.5px!important;border-radius:2px;}
+.nav-cta::after{display:none!important;}
 
 /* HERO */
-.hero{height:100vh;min-height:680px;position:relative;overflow:hidden;display:flex;align-items:flex-end;}
-.hero-slides{position:absolute;inset:0;}
-.slide{
-  position:absolute;inset:0;background-size:cover;background-position:center;
-  opacity:0;transform:scale(1.06);
-  transition:opacity 1.8s ease,transform 10s ease;
-}
+.hero{height:100vh;min-height:660px;position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+.slides{position:absolute;inset:0;}
+.slide{position:absolute;inset:0;opacity:0;background-size:cover;background-position:center;transform:scale(1.08);transition:opacity 1.8s ease,transform 14s ease;}
 .slide.on{opacity:1;transform:scale(1);}
-.s1{background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=90');}
-.s2{background-image:url('https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=90');}
-.s3{background-image:url('https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=1920&q=90');}
-.s4{background-image:url('https://images.unsplash.com/photo-1585007600263-71228e40c8d1?w=1920&q=90');}
-.hero-veil{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(105deg,rgba(11,22,16,.88) 0%,rgba(11,22,16,.45) 50%,rgba(11,22,16,.1) 100%),
-    linear-gradient(to top,rgba(11,22,16,.96) 0%,transparent 55%);
-}
-.hero-body{position:relative;z-index:10;padding:0 64px 90px;max-width:820px;}
-.hero-tag{
-  display:inline-flex;align-items:center;gap:12px;
-  font-size:10.5px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);
-  margin-bottom:22px;opacity:0;animation:upIn .8s .3s ease forwards;
-}
-.hero-tag::before{content:'';width:34px;height:1px;background:var(--gold);}
-.hero-h1{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(62px,7.8vw,118px);font-weight:600;line-height:.92;color:var(--cream);
-  opacity:0;animation:upIn .95s .52s ease forwards;
-}
-.hero-h1 em{font-style:italic;color:var(--gold);}
-.hero-h1 .alt{display:block;}
-.hero-p{
-  margin-top:22px;font-size:15.5px;font-weight:300;
-  color:rgba(246,241,232,.68);line-height:1.85;max-width:500px;
-  opacity:0;animation:upIn .9s .74s ease forwards;
-}
-.hero-row{
-  margin-top:40px;display:flex;gap:16px;align-items:center;
-  opacity:0;animation:upIn .9s .94s ease forwards;
-}
-.btn-fill{
-  background:var(--gold);color:var(--ink);text-decoration:none;
-  padding:16px 42px;font-size:11.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  cursor:none;transition:transform .2s,box-shadow .2s;
-  display:inline-flex;align-items:center;gap:10px;border:none;font-family:'Outfit',sans-serif;
-}
-.btn-fill:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(201,168,76,.38);}
-.btn-ghost{
-  background:transparent;color:var(--cream);text-decoration:none;
-  border:1px solid rgba(246,241,232,.32);
-  padding:16px 42px;font-size:11.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;
-  cursor:none;transition:border-color .2s,background .2s;
-}
-.btn-ghost:hover{border-color:var(--gold);background:rgba(201,168,76,.09);}
-
-.hero-dots{
-  position:absolute;right:64px;bottom:90px;z-index:10;
-  display:flex;flex-direction:column;gap:9px;
-}
-.hd{width:4px;height:26px;background:rgba(246,241,232,.22);cursor:none;transition:background .3s,height .3s;}
-.hd.on{background:var(--gold);height:46px;}
-.hero-counter{
-  position:absolute;right:64px;top:50%;transform:translateY(-50%);
-  z-index:10;text-align:right;font-family:'Bebas Neue',sans-serif;
-  opacity:0;animation:fadeIn 1s 1.3s ease forwards;
-}
-.hc-cur{font-size:68px;color:var(--cream);line-height:1;}
-.hc-total{font-size:18px;color:rgba(246,241,232,.35);letter-spacing:2px;}
-.hero-scroll{
-  position:absolute;left:64px;bottom:90px;z-index:10;
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  font-size:9.5px;letter-spacing:4px;text-transform:uppercase;
-  color:rgba(246,241,232,.38);opacity:0;animation:fadeIn 1s 1.5s ease forwards;
-}
-.scroll-bar{width:1px;height:54px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sbar 2s 1.8s ease-in-out infinite;}
-@keyframes sbar{0%,100%{transform:scaleY(1);opacity:.6;}50%{transform:scaleY(1.25);opacity:1;}}
-@keyframes upIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
-@keyframes fadeIn{to{opacity:1;}}
+.slide-veil{position:absolute;inset:0;background:
+  linear-gradient(105deg,rgba(7,17,12,.92) 0%,rgba(7,17,12,.4) 55%,rgba(7,17,12,.05) 100%),
+  linear-gradient(to top,rgba(7,17,12,.98) 0%,transparent 55%);}
+.hero-body{position:relative;z-index:10;padding:0 60px 90px;max-width:800px;}
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:22px;opacity:0;animation:upIn .9s .3s ease both;}
+.eyebrow::before{content:'';width:38px;height:1px;background:var(--gold);}
+h1.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(54px,7.5vw,112px);font-weight:600;line-height:.88;color:var(--cream);opacity:0;animation:upIn 1s .5s ease both;}
+h1.hero-h1 em{font-style:italic;color:var(--gold);}
+h1.hero-h1 span{display:block;}
+.hero-sub{font-size:14.5px;font-weight:300;color:var(--muted);line-height:1.9;max-width:500px;margin-top:24px;opacity:0;animation:upIn .9s .72s ease both;}
+.hero-btns{display:flex;gap:14px;margin-top:40px;opacity:0;animation:upIn .9s .9s ease both;}
+.btn-gold{background:var(--gold);color:var(--ink);padding:15px 36px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:none;transition:background .2s,transform .2s;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--cream);padding:15px 36px;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(242,234,216,.35);cursor:none;transition:all .2s;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.slide-nav{position:absolute;right:60px;bottom:90px;z-index:10;display:flex;flex-direction:column;gap:10px;}
+.sd{width:32px;height:2px;background:rgba(242,234,216,.25);cursor:none;transition:all .3s;}
+.sd.on{background:var(--gold);width:52px;}
+.hero-scroll{position:absolute;bottom:30px;left:60px;z-index:10;display:flex;align-items:center;gap:10px;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);opacity:0;animation:upIn .7s 1.4s ease both;}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);}
 
 /* TICKER */
-.ticker-wrap{background:var(--gold);padding:0;overflow:hidden;white-space:nowrap;}
-.ticker-track{display:inline-flex;animation:tRun 30s linear infinite;}
-.ti{font-family:'Bebas Neue',sans-serif;font-size:13.5px;letter-spacing:4px;color:var(--ink);padding:14px 46px;}
-.td{color:var(--forest);font-size:18px;vertical-align:middle;}
-@keyframes tRun{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.ticker-wrap{background:var(--gold);padding:13px 0;overflow:hidden;position:relative;z-index:5;}
+.ticker-track{display:flex;width:max-content;animation:ticker 18s linear infinite;}
+.ticker-item{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:5px;color:var(--ink);padding:0 48px;white-space:nowrap;}
+.ticker-dot{color:rgba(7,17,12,.4);margin:0 4px;}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* LABEL / HEADING */
-.lbl{font-size:10px;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
-.lbl::before{content:'';width:26px;height:1px;background:var(--gold);}
-.sh{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,4.2vw,64px);font-weight:600;line-height:1.06;color:var(--cream);}
-.sh em{font-style:italic;color:var(--gold);}
+/* SECTIONS COMMON */
+section{padding:100px 60px;}
+.sec-label{font-size:9.5px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.sec-label::before{content:'— ';}
+h2.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4.5vw,64px);font-weight:600;line-height:1.05;color:var(--cream);}
+h2.sec-title em{font-style:italic;color:var(--gold);}
 
-/* REVEAL */
-.rv{opacity:0;transform:translateY(42px);transition:opacity .78s ease,transform .78s ease;}
-.rv.on{opacity:1;transform:none;}
-.rv.d1{transition-delay:.12s;}.rv.d2{transition-delay:.24s;}.rv.d3{transition-delay:.36s;}.rv.d4{transition-delay:.48s;}
+/* STATS BAR */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(196,154,46,.2);border-bottom:1px solid rgba(196,154,46,.2);}
+.stat{padding:40px 30px;border-right:1px solid rgba(196,154,46,.12);text-align:center;}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,5vw,68px);color:var(--gold);line-height:1;}
+.stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
 
-/* INTRO */
-.intro-wrap{display:grid;grid-template-columns:52% 48%;min-height:92vh;}
-.intro-photo{position:relative;overflow:hidden;}
-.intro-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78);transition:transform 9s ease;}
-.intro-photo:hover img{transform:scale(1.05);}
-.intro-photo-cap{
-  position:absolute;bottom:0;left:0;right:0;padding:48px 44px;
-  background:linear-gradient(to top,rgba(11,22,16,.9) 0%,transparent 100%);
-}
-.intro-photo-tag{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:var(--cream);}
-.intro-photo-tag span{
-  display:inline-block;background:var(--gold);color:var(--ink);font-style:normal;
-  font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;
-  padding:5px 14px;margin-right:10px;vertical-align:middle;
-}
-.intro-text{background:var(--forest);padding:100px 72px;display:flex;flex-direction:column;justify-content:center;}
-.intro-text p{font-size:15.5px;font-weight:300;color:rgba(246,241,232,.72);line-height:1.95;margin-top:20px;}
-.intro-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px;}
-.istat{background:rgba(246,241,232,.04);border:1px solid rgba(246,241,232,.07);padding:28px 22px;transition:background .3s;cursor:none;}
-.istat:hover{background:rgba(201,168,76,.1);}
-.istat-n{font-family:'Bebas Neue',sans-serif;font-size:50px;color:var(--gold);line-height:1;}
-.istat-l{font-size:12px;color:rgba(246,241,232,.5);margin-top:5px;letter-spacing:1px;}
-
-/* STATES HORIZONTAL SCROLL */
-.states-sec{background:var(--ink);padding:110px 0 110px 64px;}
-.states-head{display:flex;justify-content:space-between;align-items:flex-end;padding-right:64px;margin-bottom:56px;}
-.states-scroll{display:flex;gap:4px;overflow-x:auto;padding-right:64px;scrollbar-width:none;scroll-snap-type:x mandatory;}
+/* STATES SCROLL */
+.states-section{padding:100px 0 100px 60px;overflow:hidden;}
+.states-head{padding-right:60px;margin-bottom:50px;}
+.states-scroll{display:flex;gap:20px;overflow-x:auto;padding-right:60px;padding-bottom:20px;scrollbar-width:none;}
 .states-scroll::-webkit-scrollbar{display:none;}
-.scard{flex:0 0 320px;height:480px;position:relative;overflow:hidden;scroll-snap-align:start;cursor:none;background:#152b1c;transition:flex .5s ease;}
-.scard:hover{flex:0 0 430px;}
-.scard img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.6);transition:transform .7s ease,filter .5s ease;}
-.scard:hover img{transform:scale(1.07);filter:brightness(.42);}
-.scard-veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,22,16,.92) 0%,transparent 55%);transition:background .4s;}
-.scard:hover .scard-veil{background:linear-gradient(to top,rgba(11,22,16,.97) 0%,rgba(11,22,16,.12) 55%);}
-.scard-body{position:absolute;bottom:0;left:0;right:0;padding:32px 26px;}
-.scard-name{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:var(--cream);}
-.scard-sub{font-size:12px;color:var(--gold);margin-top:6px;letter-spacing:1px;}
-.scard-pkgs{font-size:11px;color:rgba(246,241,232,.42);margin-top:4px;}
-.scard-cta{
-  display:inline-flex;align-items:center;gap:8px;margin-top:18px;
-  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--gold);text-decoration:none;cursor:none;
-  opacity:0;transform:translateY(10px);transition:opacity .3s .1s,transform .3s .1s;
-}
-.scard-cta::after{content:'→';}
-.scard:hover .scard-cta{opacity:1;transform:none;}
+.state-card{flex:0 0 280px;height:440px;border-radius:3px;overflow:hidden;position:relative;cursor:none;transition:flex-basis .4s ease;}
+.state-card:hover{flex-basis:400px;}
+.state-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+.state-card:hover img{transform:scale(1.05);}
+.state-veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,17,12,.92) 0%,rgba(7,17,12,.3) 50%,rgba(7,17,12,.05) 100%);transition:background .4s;}
+.state-card:hover .state-veil{background:linear-gradient(to top,rgba(7,17,12,.95) 0%,rgba(7,17,12,.5) 55%,rgba(7,17,12,.1) 100%);}
+.state-info{position:absolute;bottom:0;left:0;right:0;padding:28px 24px;}
+.state-no{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:3px;color:var(--gold);opacity:.7;}
+.state-name{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--cream);margin:4px 0;}
+.state-desc{font-size:12.5px;color:var(--muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height .4s ease,margin .4s;}
+.state-card:hover .state-desc{max-height:80px;margin-top:10px;}
+.state-cta{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-top:0;max-height:0;overflow:hidden;transition:max-height .4s ease,margin .4s;}
+.state-card:hover .state-cta{max-height:40px;margin-top:14px;}
+.state-cta-arrow{transition:transform .2s;}
+.state-card:hover .state-cta-arrow{transform:translateX(5px);}
 
 /* PACKAGES */
-.pkgs-sec{background:#0d1e13;padding:110px 64px;}
-.pkgs-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;}
-.pkg-filters{display:flex;gap:8px;}
-.pf{
-  background:transparent;border:1px solid rgba(201,168,76,.3);
-  color:rgba(246,241,232,.55);padding:9px 22px;
-  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
-  cursor:none;font-family:'Outfit',sans-serif;transition:all .2s;
-}
-.pf:hover,.pf.active{background:var(--gold);color:var(--ink);border-color:var(--gold);}
-.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
-.pk{background:#111f17;overflow:hidden;cursor:none;position:relative;}
-.pk-img{height:250px;overflow:hidden;position:relative;}
-.pk-img img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82);transition:transform .65s ease,filter .4s;}
-.pk:hover .pk-img img{transform:scale(1.08);filter:brightness(.58);}
-.pk-badge{position:absolute;top:18px;left:18px;background:var(--gold);color:var(--ink);font-size:9px;font-weight:700;letter-spacing:2px;padding:5px 13px;text-transform:uppercase;}
-.pk-body{padding:28px 26px 30px;}
-.pk-state{font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.pk-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--cream);line-height:1.25;}
-.pk-meta{display:flex;gap:20px;margin-top:18px;padding-top:18px;border-top:1px solid rgba(246,241,232,.07);}
-.pk-mi{font-size:11px;color:rgba(246,241,232,.45);}
-.pk-mi strong{display:block;color:var(--cream);font-size:13px;font-weight:500;margin-bottom:2px;}
-.pk-foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px;}
-.pk-price{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold);}
-.pk-price small{font-family:'Outfit',sans-serif;font-size:11px;color:rgba(246,241,232,.4);}
-.pk-btn{background:transparent;border:1px solid rgba(201,168,76,.35);color:var(--gold);padding:9px 20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:none;font-family:'Outfit',sans-serif;transition:all .2s;}
-.pk-btn:hover{background:var(--gold);color:var(--ink);}
+.pkg-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:52px;}
+.filter-btn{padding:9px 24px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;border:1px solid rgba(196,154,46,.3);background:transparent;color:var(--muted);cursor:none;transition:all .25s;border-radius:1px;}
+.filter-btn.active,.filter-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(196,154,46,.06);}
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.pkg-card{position:relative;overflow:hidden;cursor:none;background:var(--forest);}
+.pkg-img{width:100%;height:320px;object-fit:cover;transition:transform .6s ease;}
+.pkg-card:hover .pkg-img{transform:scale(1.06);}
+.pkg-img-wrap{overflow:hidden;position:relative;}
+.pkg-tag{position:absolute;top:16px;left:16px;background:var(--gold);color:var(--ink);font-size:8.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:5px 12px;}
+.pkg-body{padding:22px 24px 26px;}
+.pkg-state{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.pkg-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:10px;}
+.pkg-meta{display:flex;gap:16px;margin-bottom:14px;}
+.pkg-meta span{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;}
+.pkg-price{display:flex;align-items:baseline;gap:6px;}
+.pkg-price strong{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);}
+.pkg-price span{font-size:11px;color:var(--muted);}
+.pkg-book{display:block;text-align:center;background:transparent;border:1px solid rgba(196,154,46,.3);color:var(--gold);font-size:9.5px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:11px;margin-top:18px;cursor:none;transition:all .25s;}
+.pkg-book:hover{background:var(--gold);color:var(--ink);}
 
-/* FULL BLEED FEATURE */
-.feature{height:90vh;min-height:600px;position:relative;display:flex;align-items:center;overflow:hidden;}
-.feature-bg{
-  position:absolute;inset:0;
-  background:url('https://images.unsplash.com/photo-1519922639192-e73293ca430e?w=1800&q=90') center/cover no-repeat;
-  filter:brightness(.45);transition:transform 10s ease;
-}
-.feature:hover .feature-bg{transform:scale(1.04);}
-.feature-grad{position:absolute;inset:0;background:linear-gradient(to right,rgba(11,22,16,.9) 0%,rgba(11,22,16,.3) 60%,transparent 100%);}
-.feature-body{position:relative;z-index:5;padding:0 64px;max-width:680px;}
-.feature-h{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,5.5vw,82px);font-weight:600;line-height:1;color:var(--cream);}
-.feature-h em{font-style:italic;color:var(--gold);}
-.feature-p{margin-top:20px;font-size:15px;font-weight:300;color:rgba(246,241,232,.7);line-height:1.85;}
-.feature-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
-.pill{border:1px solid rgba(201,168,76,.4);padding:8px 18px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);}
+/* FULL BLEED */
+.full-bleed{position:relative;height:70vh;min-height:500px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.full-bleed img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.full-bleed-veil{position:absolute;inset:0;background:rgba(7,17,12,.62);}
+.full-bleed-body{position:relative;z-index:2;text-align:center;padding:0 40px;}
+.full-bleed-body h2{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,6vw,90px);font-weight:600;color:var(--cream);line-height:1;}
+.full-bleed-body h2 em{color:var(--gold);font-style:italic;}
+.full-bleed-pills{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:32px;}
+.pill{padding:10px 22px;border:1px solid rgba(196,154,46,.4);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--cream);}
 
-/* PHOTO MOSAIC */
-.mosaic{background:var(--ink);padding:110px 64px;}
-.mosaic-head{margin-bottom:56px;}
-.mosaic-grid{
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  grid-template-rows:260px 260px;
-  gap:4px;
-}
-.mg{overflow:hidden;position:relative;cursor:none;}
-.mg img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.72);transition:transform .7s ease,filter .4s;}
-.mg:hover img{transform:scale(1.09);filter:brightness(.5);}
-.mg-cap{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:20px 18px;
-  background:linear-gradient(to top,rgba(11,22,16,.88),transparent);
-  font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2.5px;color:var(--cream);
-}
-.mg-cap small{display:block;font-family:'Outfit',sans-serif;font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
-.mg1{grid-column:span 5;grid-row:span 2;}
-.mg2{grid-column:span 4;}
-.mg3{grid-column:span 3;}
-.mg4{grid-column:span 3;}
-.mg5{grid-column:span 4;}
+/* MOSAIC */
+.mosaic{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(2,280px);gap:3px;padding:0 60px 100px;}
+.mosaic-item{overflow:hidden;position:relative;}
+.mosaic-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s;}
+.mosaic-item:hover img{transform:scale(1.06);}
+.m1{grid-column:1/5;grid-row:1/2;}
+.m2{grid-column:5/8;grid-row:1/2;}
+.m3{grid-column:8/13;grid-row:1/3;}
+.m4{grid-column:1/4;grid-row:2/3;}
+.m5{grid-column:4/8;grid-row:2/3;}
 
 /* EXPERIENCES */
-.exp-sec{background:var(--forest);padding:110px 64px;position:relative;overflow:hidden;}
-.exp-sec::before{content:'';position:absolute;top:-120px;right:-120px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.06),transparent 70%);}
-.exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:56px;}
-.eg{background:rgba(246,241,232,.04);border:1px solid rgba(246,241,232,.06);padding:44px 30px;transition:background .3s,transform .3s,border-color .3s;cursor:none;}
-.eg:hover{background:rgba(201,168,76,.09);transform:translateY(-5px);border-color:rgba(201,168,76,.2);}
-.eg-icon{font-size:40px;margin-bottom:22px;}
-.eg-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--cream);margin-bottom:12px;}
-.eg-txt{font-size:13.5px;font-weight:300;color:rgba(246,241,232,.6);line-height:1.75;}
+.exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:56px;}
+.exp-card{background:var(--forest);padding:40px 32px;border-top:2px solid transparent;transition:border-color .3s,background .3s;}
+.exp-card:hover{border-top-color:var(--gold);background:var(--moss);}
+.exp-icon{font-size:32px;margin-bottom:20px;}
+.exp-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--cream);margin-bottom:12px;}
+.exp-desc{font-size:13px;color:var(--muted);line-height:1.8;}
 
 /* TESTIMONIALS */
-.testi-sec{background:var(--ink);padding:110px 64px;}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:54px;}
-.tc{background:rgba(246,241,232,.03);border:1px solid rgba(246,241,232,.07);padding:38px 32px;transition:border-color .3s;}
-.tc:hover{border-color:rgba(201,168,76,.3);}
-.tc-stars{color:var(--gold);font-size:13px;letter-spacing:3px;margin-bottom:18px;}
-.tc-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--cream);line-height:1.75;margin-bottom:26px;}
-.tc-name{font-size:12px;font-weight:600;color:var(--cream);margin-bottom:2px;}
-.tc-loc{font-size:11px;color:rgba(246,241,232,.4);letter-spacing:1px;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;}
+.testi-card{background:var(--forest);padding:36px 32px;border-left:2px solid var(--gold);}
+.testi-stars{color:var(--gold);font-size:13px;margin-bottom:18px;letter-spacing:2px;}
+.testi-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--cream);line-height:1.7;margin-bottom:20px;}
+.testi-author{font-size:11.5px;letter-spacing:1.5px;color:var(--gold);}
+.testi-from{font-size:10.5px;color:var(--muted);margin-top:3px;}
 
-/* SEARCH BAR */
-.search-bar-sec{background:var(--gold);padding:72px 64px;}
-.sb-inner{max-width:960px;margin:0 auto;text-align:center;}
-.sb-h{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:700;color:var(--ink);margin-bottom:10px;}
-.sb-sub{font-size:15px;color:rgba(11,22,16,.65);margin-bottom:38px;}
-.sb-form{display:flex;gap:3px;}
-.sb-form select,.sb-form input{flex:1;padding:18px;background:var(--ink);color:var(--cream);border:none;outline:none;font-family:'Outfit',sans-serif;font-size:13px;cursor:none;appearance:none;}
-.sb-form select option{background:var(--ink);}
-.sb-form button{background:var(--ink);color:var(--gold);border:none;padding:18px 40px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;cursor:none;transition:background .2s;white-space:nowrap;}
-.sb-form button:hover{background:var(--forest);}
+/* ABOUT PAGE */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-imgs{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.about-imgs img{width:100%;height:240px;object-fit:cover;}
+.about-imgs img:first-child{grid-column:1/3;height:300px;}
+.about-text p{font-size:15px;color:var(--muted);line-height:1.9;margin-bottom:18px;}
+.about-values{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px;}
+.val-item{padding:22px;background:var(--forest);border-top:2px solid var(--gold);}
+.val-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--cream);margin-bottom:8px;}
+.val-desc{font-size:12.5px;color:var(--muted);line-height:1.7;}
 
-/* ABOUT */
-.about-sec{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;}
-.about-photos{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;}
-.about-photos img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.8);transition:filter .4s,transform .6s;}
-.about-photos img:hover{filter:brightness(1);transform:scale(1.02);}
-.about-txt{background:var(--forest);padding:90px 72px;display:flex;flex-direction:column;justify-content:center;}
-.about-txt p{font-size:15px;font-weight:300;color:rgba(246,241,232,.72);line-height:1.95;margin-top:18px;}
-.about-list{list-style:none;margin-top:32px;}
-.about-list li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(246,241,232,.06);font-size:13.5px;font-weight:300;color:rgba(246,241,232,.7);}
-.about-list li::before{content:'✦';color:var(--gold);font-size:9px;margin-top:5px;flex-shrink:0;}
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px;}
+.team-card{text-align:center;}
+.team-img{width:100%;height:280px;object-fit:cover;object-position:top;margin-bottom:18px;}
+.team-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--cream);}
+.team-role{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-top:5px;}
 
-/* CONTACT */
-.contact-sec{background:#0d1e13;padding:110px 64px;}
-.contact-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:90px;margin-top:56px;}
-.cfield{margin-bottom:18px;}
-.cfield label{display:block;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(246,241,232,.45);margin-bottom:8px;}
-.cfield input,.cfield select,.cfield textarea{width:100%;background:rgba(246,241,232,.04);border:1px solid rgba(246,241,232,.09);color:var(--cream);padding:14px 16px;font-family:'Outfit',sans-serif;font-size:13.5px;outline:none;cursor:none;resize:none;appearance:none;transition:border-color .2s;}
-.cfield select option{background:var(--ink);}
-.cfield input:focus,.cfield select:focus,.cfield textarea:focus{border-color:var(--gold);}
-.ci-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
-.ci-val{font-size:14px;line-height:1.7;color:rgba(246,241,232,.75);}
-.cinfo-item{margin-bottom:34px;}
+/* CONTACT PAGE */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.contact-info h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--cream);margin-bottom:24px;}
+.contact-detail{display:flex;gap:16px;margin-bottom:28px;align-items:flex-start;}
+.contact-icon{width:44px;height:44px;background:var(--moss);border:1px solid rgba(196,154,46,.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.contact-detail-text label{font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px;}
+.contact-detail-text p{font-size:14px;color:var(--muted);line-height:1.7;}
+.contact-form{background:var(--forest);padding:48px 42px;}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--cream);margin-bottom:32px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{margin-bottom:20px;}
+.form-group label{display:block;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(7,17,12,.6);border:1px solid rgba(196,154,46,.22);color:var(--cream);padding:13px 16px;font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:border-color .25s;cursor:none;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
+.form-group textarea{resize:vertical;min-height:120px;}
+.form-group select option{background:var(--forest);}
+.form-submit{width:100%;background:var(--gold);color:var(--ink);padding:15px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;border:none;cursor:none;transition:background .2s;}
+.form-submit:hover{background:var(--gold2);}
 
 /* FOOTER */
-footer{background:var(--ink);border-top:1px solid rgba(246,241,232,.05);padding:64px;}
-.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:52px;}
-.foot-brand p{font-size:13.5px;font-weight:300;color:rgba(246,241,232,.45);line-height:1.85;max-width:270px;margin-top:18px;}
-.foot-col h5{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--gold);margin-bottom:18px;}
-.foot-col a{display:block;text-decoration:none;color:rgba(246,241,232,.45);font-size:13px;margin-bottom:9px;transition:color .2s;cursor:none;}
-.foot-col a:hover{color:var(--cream);}
-.foot-bot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(246,241,232,.05);padding-top:26px;font-size:12px;color:rgba(246,241,232,.25);}
+footer{background:var(--forest);border-top:1px solid rgba(196,154,46,.15);padding:70px 60px 36px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;margin-bottom:50px;}
+.footer-brand p{font-size:13.5px;color:var(--muted);line-height:1.8;margin-top:16px;max-width:280px;}
+.footer-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:10px;}
+.footer-col ul li a{text-decoration:none;font-size:13.5px;color:var(--muted);cursor:none;transition:color .2s;}
+.footer-col ul li a:hover{color:var(--gold);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(196,154,46,.1);}
+.footer-bottom p{font-size:12px;color:var(--muted);}
+.footer-socials{display:flex;gap:14px;}
+.soc{width:36px;height:36px;border:1px solid rgba(196,154,46,.25);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:none;transition:border-color .2s,background .2s;}
+.soc:hover{border-color:var(--gold);background:rgba(196,154,46,.1);}
 
-/* RESPONSIVE */
-@media(max-width:960px){
-  nav{padding:18px 26px;}nav.stuck{padding:14px 26px;}.nav-links{display:none;}
-  .hero-body{padding:0 26px 72px;}.hero-dots,.hero-counter,.hero-scroll{display:none;}
-  .intro-wrap{grid-template-columns:1fr;}.intro-photo{height:60vw;min-height:280px;}.intro-text{padding:64px 30px;}
-  .states-sec{padding:80px 0 80px 26px;}.states-head{padding-right:26px;}.states-scroll{padding-right:26px;}.scard{flex:0 0 260px;height:380px;}
-  .pkgs-sec,.mosaic,.exp-sec,.testi-sec,.contact-sec{padding:80px 26px;}.pkg-grid{grid-template-columns:1fr;}
-  .mosaic-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}.mg1,.mg2,.mg3,.mg4,.mg5{grid-column:span 1;grid-row:span 1;height:200px;}
-  .exp-grid{grid-template-columns:1fr 1fr;}.testi-grid{grid-template-columns:1fr;}
-  .sb-form{flex-direction:column;}.search-bar-sec{padding:56px 26px;}
-  .about-sec{grid-template-columns:1fr;}.about-photos{height:70vw;min-height:300px;}.about-txt{padding:64px 26px;}
-  .contact-grid{grid-template-columns:1fr;gap:50px;}.foot-grid{grid-template-columns:1fr 1fr;}footer{padding:48px 26px;}
+/* PAGE HEADERS */
+.page-header{position:relative;height:55vh;min-height:420px;overflow:hidden;display:flex;align-items:flex-end;}
+.page-header img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.page-header-veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,17,12,1) 0%,rgba(7,17,12,.5) 55%,rgba(7,17,12,.1) 100%);}
+.page-header-body{position:relative;z-index:2;padding:0 60px 60px;}
+.page-header-body .eyebrow{animation:none;opacity:1;}
+.page-header-body h1{font-family:'Cormorant Garamond',serif;font-size:clamp(46px,6vw,92px);font-weight:600;line-height:.92;color:var(--cream);animation:none;opacity:1;}
+.page-header-body h1 em{font-style:italic;color:var(--gold);}
+
+/* SEARCH BAR */
+.search-banner{background:var(--gold);padding:38px 60px;}
+.search-label{font-size:9.5px;letter-spacing:4px;text-transform:uppercase;color:var(--ink);opacity:.65;margin-bottom:16px;}
+.search-bar{display:flex;gap:2px;}
+.search-select{flex:1;background:rgba(7,17,12,.08);border:none;color:var(--ink);padding:16px 20px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;outline:none;cursor:none;appearance:none;}
+.search-select option{background:#fff;color:#111;}
+.search-btn{background:var(--ink);color:var(--gold);padding:16px 36px;font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;border:none;cursor:none;transition:opacity .2s;}
+.search-btn:hover{opacity:.85;}
+
+/* ANIMATIONS */
+@keyframes upIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+
+/* MOBILE */
+@media(max-width:1024px){
+  nav{padding:18px 30px;}
+  nav.stuck{padding:10px 30px;}
+  .hero-body{padding:0 30px 70px;}
+  section{padding:70px 30px;}
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .pkg-grid{grid-template-columns:repeat(2,1fr);}
+  .exp-grid{grid-template-columns:repeat(2,1fr);}
+  .testi-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .about-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .m1,.m2,.m3,.m4,.m5{grid-column:auto;grid-row:auto;}
+  .search-bar{flex-direction:column;}
+  .team-grid{grid-template-columns:repeat(2,1fr);}
+  .states-section{padding:70px 0 70px 30px;}
+  .full-bleed-body h2{font-size:clamp(36px,7vw,70px);}
+}
+@media(max-width:640px){
+  nav .nav-links{display:none;}
+  .pkg-grid{grid-template-columns:1fr;}
+  .exp-grid{grid-template-columns:1fr;}
+  .about-imgs img:first-child{grid-column:1;}
+  .about-imgs{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .mosaic{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;gap:16px;text-align:center;}
+  .team-grid{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
 <body>
-<div id="C1"></div>
-<div id="C2"></div>
+
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
 
 <!-- NAV -->
-<nav id="nav">
-  <a href="#" class="logo">
-    <div class="logo-mark">🧭</div>
+<nav id="main-nav">
+  <a class="logo" href="#" onclick="goPage('home');return false;">
+    <div class="logo-icon">🧭</div>
     <span class="logo-name">NORTHEAST <span>NAVIGATOR</span></span>
   </a>
-  <ul class="nav-links">
-    <li><a href="#states">Destinations</a></li>
-    <li><a href="#packages">Packages</a></li>
-    <li><a href="#experiences">Experiences</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact" class="nav-book">Plan My Trip</a></li>
+  <ul class="nav-links" id="nav-ul">
+    <li><a href="#" onclick="goPage('home');return false;" data-page="home">Home</a></li>
+    <li><a href="#" onclick="goPage('packages');return false;" data-page="packages">Packages</a></li>
+    <li><a href="#" onclick="goPage('about');return false;" data-page="about">About Us</a></li>
+    <li><a href="#" onclick="goPage('contact');return false;" data-page="contact">Contact</a></li>
+    <li><a href="#" onclick="goPage('contact');return false;" class="nav-cta">Plan My Trip</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-slides">
-    <div class="slide s1 on"></div>
-    <div class="slide s2"></div>
-    <div class="slide s3"></div>
-    <div class="slide s4"></div>
-  </div>
-  <div class="hero-veil"></div>
-  <div class="hero-body">
-    <p class="hero-tag">India's Last Frontier</p>
-    <h1 class="hero-h1">
-      Where <em>Wild</em>
-      <span class="alt">India <em>Begins</em></span>
-    </h1>
-    <p class="hero-p">Eight extraordinary states. Ancient kingdoms, misty peaks, living cultures, and landscapes that exist nowhere else on earth. This is the Northeast.</p>
-    <div class="hero-row">
-      <a href="#packages" class="btn-fill">Explore Packages ↗</a>
-      <a href="#states" class="btn-ghost">All Destinations</a>
-    </div>
-  </div>
-  <div class="hero-dots" id="hdots">
-    <div class="hd on"></div><div class="hd"></div><div class="hd"></div><div class="hd"></div>
-  </div>
-  <div class="hero-counter">
-    <div class="hc-cur" id="hcur">01</div>
-    <div class="hc-total">/ 04</div>
-  </div>
-  <div class="hero-scroll">
-    <div class="scroll-bar"></div>Scroll
-  </div>
-</section>
+<!-- ═══════════════════ HOME PAGE ═══════════════════ -->
+<div class="page active" id="page-home">
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <span class="ti">ASSAM <span class="td">✦</span></span>
-    <span class="ti">MEGHALAYA <span class="td">✦</span></span>
-    <span class="ti">ARUNACHAL PRADESH <span class="td">✦</span></span>
-    <span class="ti">NAGALAND <span class="td">✦</span></span>
-    <span class="ti">MANIPUR <span class="td">✦</span></span>
-    <span class="ti">MIZORAM <span class="td">✦</span></span>
-    <span class="ti">TRIPURA <span class="td">✦</span></span>
-    <span class="ti">SIKKIM <span class="td">✦</span></span>
-    <span class="ti">ASSAM <span class="td">✦</span></span>
-    <span class="ti">MEGHALAYA <span class="td">✦</span></span>
-    <span class="ti">ARUNACHAL PRADESH <span class="td">✦</span></span>
-    <span class="ti">NAGALAND <span class="td">✦</span></span>
-    <span class="ti">MANIPUR <span class="td">✦</span></span>
-    <span class="ti">MIZORAM <span class="td">✦</span></span>
-    <span class="ti">TRIPURA <span class="td">✦</span></span>
-    <span class="ti">SIKKIM <span class="td">✦</span></span>
-  </div>
-</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="slides">
+      <!-- Slide 1: Kaziranga Rhino, Assam -->
+      <div class="slide on" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg/1280px-One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg');"></div>
+      <!-- Slide 2: Umngot/Dawki River, Meghalaya -->
+      <div class="slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dawki_River_in_Meghalaya.jpg/1280px-Dawki_River_in_Meghalaya.jpg');"></div>
+      <!-- Slide 3: Tawang Monastery, Arunachal Pradesh -->
+      <div class="slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Tawang_Monastery_3.jpg/1280px-Tawang_Monastery_3.jpg');"></div>
+      <!-- Slide 4: Dzukou Valley, Nagaland -->
+      <div class="slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Dzukou_Valley_Nagaland.jpg/1280px-Dzukou_Valley_Nagaland.jpg');"></div>
+    </div>
+    <div class="slide-veil"></div>
+    <div class="hero-body">
+      <div class="eyebrow">Discover India's Best Kept Secret</div>
+      <h1 class="hero-h1">
+        <span>Eight States,</span>
+        <span><em>Infinite</em> Stories</span>
+      </h1>
+      <p class="hero-sub">From Kaziranga's one-horned rhinos to Meghalaya's living root bridges, Tawang's ancient monasteries to Nagaland's Hornbill Festival — Northeast India is unlike anywhere else on earth.</p>
+      <div class="hero-btns">
+        <button class="btn-gold" onclick="goPage('packages')">Explore Packages</button>
+        <button class="btn-outline" onclick="goPage('about')">Our Story</button>
+      </div>
+    </div>
+    <div class="slide-nav" id="slide-nav"></div>
+    <div class="hero-scroll"><div class="scroll-line"></div>Scroll to discover</div>
+  </section>
 
-<!-- INTRO -->
-<div class="intro-wrap">
-  <div class="intro-photo rv">
-    <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1000&q=88" alt="Northeast India landscape">
-    <div class="intro-photo-cap">
-      <p class="intro-photo-tag"><span>Est. 2014</span> Born in the Hills of Guwahati</p>
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item">ASSAM <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">MEGHALAYA <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">ARUNACHAL PRADESH <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">NAGALAND <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">SIKKIM <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">MANIPUR <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">MIZORAM <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">TRIPURA <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">ASSAM <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">MEGHALAYA <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">ARUNACHAL PRADESH <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">NAGALAND <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">SIKKIM <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">MANIPUR <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">MIZORAM <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">TRIPURA <span class="ticker-dot">✦</span></span>
     </div>
   </div>
-  <div class="intro-text">
-    <div class="rv">
-      <p class="lbl">Our Story</p>
-      <h2 class="sh">Rooted in the <em>Northeast</em></h2>
-      <p>Northeast Navigator was founded by people who grew up in these mountains, forests, and river valleys. We don't just plan tours — we open doors to experiences that will redefine how you see the world.</p>
-      <p>From Kaziranga's one-horned rhinos to Meghalaya's cloud forests, from Tawang's ancient monasteries to Hornbill's thundering drums — every journey is handcrafted by people who call this land home.</p>
-    </div>
-    <div class="intro-stats rv d2">
-      <div class="istat"><div class="istat-n">8</div><div class="istat-l">States Covered</div></div>
-      <div class="istat"><div class="istat-n">200+</div><div class="istat-l">Curated Packages</div></div>
-      <div class="istat"><div class="istat-n">12K+</div><div class="istat-l">Happy Travellers</div></div>
-      <div class="istat"><div class="istat-n">10+</div><div class="istat-l">Years of Expertise</div></div>
-    </div>
-  </div>
-</div>
 
-<!-- STATES -->
-<section class="states-sec" id="states">
-  <div class="states-head rv">
-    <div>
-      <p class="lbl">Destinations</p>
-      <h2 class="sh">Eight States,<br><em>Infinite</em> Stories</h2>
-    </div>
-    <a href="#packages" class="btn-ghost">All Packages</a>
+  <!-- STATS -->
+  <div class="stats-bar reveal">
+    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Sister States</div></div>
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Tour Packages</div></div>
+    <div class="stat"><div class="stat-num">15K+</div><div class="stat-label">Happy Travellers</div></div>
+    <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Years of Experience</div></div>
   </div>
-  <div class="states-scroll">
-    <div class="scard rv">
-      <img src="https://images.unsplash.com/photo-1446329813274-7c9036bd9a1f?w=700&q=85" alt="Assam">
-      <div class="scard-veil"></div>
-      <div class="scard-body">
-        <div class="scard-name">Assam</div>
-        <div class="scard-sub">Tea Gardens & Wild Rhinos</div>
-        <div class="scard-pkgs">14 packages available</div>
-        <a href="#packages" class="scard-cta">Explore</a>
-      </div>
-    </div>
-    <div class="scard rv d1">
-      <img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=700&q=85" alt="Meghalaya">
-      <div class="scard-veil"></div>
-      <div class="scard-body">
-        <div class="scard-name">Meghalaya</div>
-        <div class="scard-sub">Abode of Clouds & Living Bridges</div>
-        <div class="scard-pkgs">12 packages available</div>
-        <a href="#packages" class="scard-cta">Explore</a>
-      </div>
-    </div>
-    <div class="scard rv d2">
-      <img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=700&q=85" alt="Arunachal Pradesh">
-      <div class="scard-veil"></div>
-      <div class="scard-body">
-        <div class="scard-name">Arunachal</div>
-        <div class="scard-sub">Land of the Rising Sun</div>
-        <div class="scard-pkgs">11 packages available</div>
-        <a href="#packages" class="scard-cta">Explore</a>
-      </div>
-    </div>
-    <div class="scard rv d3">
-      <img src="https://images.unsplash.com/photo-1519922639192-e73293ca430e?w=700&q=85" alt="Sikkim">
-      <div class="scard-veil"></div>
-      <div class="scard-body">
-        <div class="scard-name">Sikkim</div>
-        <div class="scard-sub">Himalayan Kingdom & Monasteries</div>
-        <div class="scard-pkgs">15 packages available</div>
-        <a href="#packages" class="scard-cta">Explore</a>
-      </div>
-    </div>
-    <div class="scard rv d4">
-      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=85" alt="Nagaland">
-      <div class="scard-veil"></div>
-      <div class="scard-body">
-        <div class="scard-name">Nagaland</div>
-        <div class="scard-sub">Hornbill Festival & Warrior Culture</div>
-        <div class="scard-pkgs">8 packages available</div>
-        <a href="#packages" class="scard-cta">Explore</a>
-      </div>
-    </div>
-    <div class="scard rv">
-      <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=700&q=85" alt="Manipur">
-      <div class="scard-veil"></div>
-      <div class="scard-body">
-        <div class="scard-name">Manipur</div>
-        <div class="scard-sub">Jewel of the East & Loktak Lake</div>
-        <div class="scard-pkgs">7 packages available</div>
-        <a href="#packages" class="scard-cta">Explore</a>
-      </div>
-    </div>
-    <div class="scard rv d1">
-      <img src="https://images.unsplash.com/photo-1440342359743-84fcb8c21f21?w=700&q=85" alt="Mizoram">
-      <div class="scard-veil"></div>
-      <div class="scard-body">
-        <div class="scard-name">Mizoram</div>
-        <div class="scard-sub">Blue Mountains & Bamboo Forests</div>
-        <div class="scard-pkgs">6 packages available</div>
-        <a href="#packages" class="scard-cta">Explore</a>
-      </div>
-    </div>
-    <div class="scard rv d2">
-      <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=700&q=85" alt="Tripura">
-      <div class="scard-veil"></div>
-      <div class="scard-body">
-        <div class="scard-name">Tripura</div>
-        <div class="scard-sub">Royal Palaces & Sacred Temples</div>
-        <div class="scard-pkgs">5 packages available</div>
-        <a href="#packages" class="scard-cta">Explore</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- PACKAGES -->
-<section class="pkgs-sec" id="packages">
-  <div class="pkgs-head rv">
-    <div>
-      <p class="lbl">Tour Packages</p>
-      <h2 class="sh">Handcrafted <em>Journeys</em></h2>
+  <!-- STATES HORIZONTAL SCROLL -->
+  <div class="states-section">
+    <div class="states-head reveal">
+      <div class="sec-label">Explore by State</div>
+      <h2 class="sec-title">The <em>Eight Sisters</em><br>of India</h2>
     </div>
-    <div class="pkg-filters">
-      <button class="pf active" onclick="filterPkg(this,'all')">All</button>
-      <button class="pf" onclick="filterPkg(this,'adventure')">Adventure</button>
-      <button class="pf" onclick="filterPkg(this,'wildlife')">Wildlife</button>
-      <button class="pf" onclick="filterPkg(this,'cultural')">Cultural</button>
-    </div>
-  </div>
-  <div class="pkg-grid" id="pkgGrid">
-    <div class="pk rv" data-cat="wildlife">
-      <div class="pk-img">
-        <span class="pk-badge">Bestseller</span>
-        <img src="https://images.unsplash.com/photo-1521651201144-634f700b36ef?w=700&q=85" alt="Kaziranga">
-      </div>
-      <div class="pk-body">
-        <div class="pk-state">Assam</div>
-        <div class="pk-name">Kaziranga & Majuli River Island</div>
-        <div class="pk-meta">
-          <div class="pk-mi"><strong>6 Days</strong>Duration</div>
-          <div class="pk-mi"><strong>5 Nights</strong>Stay</div>
-          <div class="pk-mi"><strong>Small Group</strong>Type</div>
-        </div>
-        <div class="pk-foot">
-          <div class="pk-price">₹24,999 <small>/ person</small></div>
-          <button class="pk-btn">View Details</button>
+    <div class="states-scroll">
+      <div class="state-card" onclick="filterAndGo('Assam')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg/800px-One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg" alt="Assam - Kaziranga" loading="lazy">
+        <div class="state-veil"></div>
+        <div class="state-info">
+          <div class="state-no">01 / 08</div>
+          <div class="state-name">Assam</div>
+          <div class="state-desc">Home to Kaziranga's one-horned rhinos, Majuli river island, and the mighty Brahmaputra.</div>
+          <div class="state-cta">Explore <span class="state-cta-arrow">→</span></div>
         </div>
       </div>
-    </div>
-    <div class="pk rv d1" data-cat="adventure">
-      <div class="pk-img">
-        <span class="pk-badge">Popular</span>
-        <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=700&q=85" alt="Meghalaya">
-      </div>
-      <div class="pk-body">
-        <div class="pk-state">Meghalaya</div>
-        <div class="pk-name">Living Root Bridges & Dawki River</div>
-        <div class="pk-meta">
-          <div class="pk-mi"><strong>5 Days</strong>Duration</div>
-          <div class="pk-mi"><strong>4 Nights</strong>Stay</div>
-          <div class="pk-mi"><strong>Customizable</strong>Type</div>
-        </div>
-        <div class="pk-foot">
-          <div class="pk-price">₹19,500 <small>/ person</small></div>
-          <button class="pk-btn">View Details</button>
+      <div class="state-card" onclick="filterAndGo('Meghalaya')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dawki_River_in_Meghalaya.jpg/800px-Dawki_River_in_Meghalaya.jpg" alt="Meghalaya - Dawki" loading="lazy">
+        <div class="state-veil"></div>
+        <div class="state-info">
+          <div class="state-no">02 / 08</div>
+          <div class="state-name">Meghalaya</div>
+          <div class="state-desc">Abode of clouds — crystal Dawki River, living root bridges, and misty waterfalls.</div>
+          <div class="state-cta">Explore <span class="state-cta-arrow">→</span></div>
         </div>
       </div>
-    </div>
-    <div class="pk rv d2" data-cat="cultural">
-      <div class="pk-img">
-        <span class="pk-badge">New</span>
-        <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=700&q=85" alt="Tawang">
-      </div>
-      <div class="pk-body">
-        <div class="pk-state">Arunachal Pradesh</div>
-        <div class="pk-name">Tawang Monastery Trail</div>
-        <div class="pk-meta">
-          <div class="pk-mi"><strong>8 Days</strong>Duration</div>
-          <div class="pk-mi"><strong>7 Nights</strong>Stay</div>
-          <div class="pk-mi"><strong>Private</strong>Type</div>
-        </div>
-        <div class="pk-foot">
-          <div class="pk-price">₹38,000 <small>/ person</small></div>
-          <button class="pk-btn">View Details</button>
+      <div class="state-card" onclick="filterAndGo('Arunachal')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Tawang_Monastery_3.jpg/800px-Tawang_Monastery_3.jpg" alt="Arunachal Pradesh" loading="lazy">
+        <div class="state-veil"></div>
+        <div class="state-info">
+          <div class="state-no">03 / 08</div>
+          <div class="state-name">Arunachal</div>
+          <div class="state-desc">Land of the Rising Sun — Tawang Monastery, Ziro Valley, and Himalayan frontiers.</div>
+          <div class="state-cta">Explore <span class="state-cta-arrow">→</span></div>
         </div>
       </div>
-    </div>
-    <div class="pk rv d3" data-cat="cultural">
-      <div class="pk-img">
-        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=700&q=85" alt="Hornbill">
-      </div>
-      <div class="pk-body">
-        <div class="pk-state">Nagaland</div>
-        <div class="pk-name">Hornbill Festival Special</div>
-        <div class="pk-meta">
-          <div class="pk-mi"><strong>4 Days</strong>Duration</div>
-          <div class="pk-mi"><strong>3 Nights</strong>Stay</div>
-          <div class="pk-mi"><strong>Group</strong>Type</div>
-        </div>
-        <div class="pk-foot">
-          <div class="pk-price">₹22,000 <small>/ person</small></div>
-          <button class="pk-btn">View Details</button>
+      <div class="state-card" onclick="filterAndGo('Nagaland')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Dzukou_Valley_Nagaland.jpg/800px-Dzukou_Valley_Nagaland.jpg" alt="Nagaland" loading="lazy">
+        <div class="state-veil"></div>
+        <div class="state-info">
+          <div class="state-no">04 / 08</div>
+          <div class="state-name">Nagaland</div>
+          <div class="state-desc">Warrior culture, Hornbill Festival, Dzukou Valley, and the legendary Naga tribes.</div>
+          <div class="state-cta">Explore <span class="state-cta-arrow">→</span></div>
         </div>
       </div>
-    </div>
-    <div class="pk rv" data-cat="adventure">
-      <div class="pk-img">
-        <span class="pk-badge">Top Rated</span>
-        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=85" alt="Sikkim">
-      </div>
-      <div class="pk-body">
-        <div class="pk-state">Sikkim</div>
-        <div class="pk-name">Gangtok, Lachung & Yumthang Valley</div>
-        <div class="pk-meta">
-          <div class="pk-mi"><strong>7 Days</strong>Duration</div>
-          <div class="pk-mi"><strong>6 Nights</strong>Stay</div>
-          <div class="pk-mi"><strong>All-Inclusive</strong>Type</div>
-        </div>
-        <div class="pk-foot">
-          <div class="pk-price">₹32,500 <small>/ person</small></div>
-          <button class="pk-btn">View Details</button>
+      <div class="state-card" onclick="filterAndGo('Sikkim')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Gangtok_City%2C_Sikkim%2C_India.jpg/800px-Gangtok_City%2C_Sikkim%2C_India.jpg" alt="Sikkim" loading="lazy">
+        <div class="state-veil"></div>
+        <div class="state-info">
+          <div class="state-no">05 / 08</div>
+          <div class="state-name">Sikkim</div>
+          <div class="state-desc">Himalayan gem — Gangtok, Kanchenjunga views, Lachung, and Yumthang valley of flowers.</div>
+          <div class="state-cta">Explore <span class="state-cta-arrow">→</span></div>
         </div>
       </div>
-    </div>
-    <div class="pk rv d1" data-cat="wildlife">
-      <div class="pk-img">
-        <img src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?w=700&q=85" alt="Manipur">
-      </div>
-      <div class="pk-body">
-        <div class="pk-state">Manipur</div>
-        <div class="pk-name">Loktak Lake & Sangai Deer Safari</div>
-        <div class="pk-meta">
-          <div class="pk-mi"><strong>5 Days</strong>Duration</div>
-          <div class="pk-mi"><strong>4 Nights</strong>Stay</div>
-          <div class="pk-mi"><strong>Private</strong>Type</div>
+      <div class="state-card" onclick="filterAndGo('Manipur')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Loktak_Lake_manipur.jpg/800px-Loktak_Lake_manipur.jpg" alt="Manipur - Loktak Lake" loading="lazy">
+        <div class="state-veil"></div>
+        <div class="state-info">
+          <div class="state-no">06 / 08</div>
+          <div class="state-name">Manipur</div>
+          <div class="state-desc">Jewel of India — Loktak Lake's floating phumdis, Sangai deer, and Imphal heritage.</div>
+          <div class="state-cta">Explore <span class="state-cta-arrow">→</span></div>
         </div>
-        <div class="pk-foot">
-          <div class="pk-price">₹21,000 <small>/ person</small></div>
-          <button class="pk-btn">View Details</button>
+      </div>
+      <div class="state-card" onclick="filterAndGo('Mizoram')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aizawl_from_the_air.jpg/800px-Aizawl_from_the_air.jpg" alt="Mizoram" loading="lazy">
+        <div class="state-veil"></div>
+        <div class="state-info">
+          <div class="state-no">07 / 08</div>
+          <div class="state-name">Mizoram</div>
+          <div class="state-desc">Land of the hill people — Aizawl's dramatic hillside city, Phawngpui Blue Mountain.</div>
+          <div class="state-cta">Explore <span class="state-cta-arrow">→</span></div>
+        </div>
+      </div>
+      <div class="state-card" onclick="filterAndGo('Tripura')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Neermahal_tripura.jpg/800px-Neermahal_tripura.jpg" alt="Tripura - Neermahal" loading="lazy">
+        <div class="state-veil"></div>
+        <div class="state-info">
+          <div class="state-no">08 / 08</div>
+          <div class="state-name">Tripura</div>
+          <div class="state-desc">Royal heritage — Neermahal water palace, Ujjayanta Palace, and ancient tribal culture.</div>
+          <div class="state-cta">Explore <span class="state-cta-arrow">→</span></div>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- FULL BLEED FEATURE -->
-<div class="feature">
-  <div class="feature-bg"></div>
-  <div class="feature-grad"></div>
-  <div class="feature-body rv">
-    <p class="lbl">Why Northeast</p>
-    <h2 class="feature-h">India's Most<br><em>Untouched</em><br>Wilderness</h2>
-    <p class="feature-p">95% of India's orchid species. The world's only floating national park. The wettest place on earth. The Northeast holds records the rest of the world is only beginning to discover.</p>
-    <div class="feature-pills">
-      <span class="pill">🦏 One-Horned Rhino</span>
-      <span class="pill">🌸 Valley of Flowers</span>
-      <span class="pill">🌉 Living Root Bridges</span>
-      <span class="pill">⛰️ Himalayan Peaks</span>
-      <span class="pill">🎭 Tribal Festivals</span>
+  <!-- FEATURED PACKAGES (HOME) -->
+  <section style="padding-top:0;">
+    <div class="reveal" style="margin-bottom:52px;">
+      <div class="sec-label">Featured Tours</div>
+      <h2 class="sec-title">Handpicked <em>Experiences</em></h2>
     </div>
-  </div>
-</div>
+    <div class="pkg-grid" id="home-pkgs">
+      <!-- Cards injected via JS -->
+    </div>
+    <div style="text-align:center;margin-top:48px;" class="reveal">
+      <button class="btn-gold" onclick="goPage('packages')">View All Packages</button>
+    </div>
+  </section>
 
-<!-- PHOTO MOSAIC -->
-<section class="mosaic">
-  <div class="mosaic-head rv">
-    <p class="lbl">Gallery</p>
-    <h2 class="sh">Through the <em>Lens</em></h2>
-  </div>
-  <div class="mosaic-grid">
-    <div class="mg mg1 rv">
-      <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=900&q=88" alt="Forest Northeast">
-      <div class="mg-cap"><small>Assam</small>Kaziranga National Park</div>
-    </div>
-    <div class="mg mg2 rv d1">
-      <img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=700&q=85" alt="Meghalaya">
-      <div class="mg-cap"><small>Meghalaya</small>Living Root Bridge</div>
-    </div>
-    <div class="mg mg3 rv d2">
-      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=85" alt="Sikkim mountains">
-      <div class="mg-cap"><small>Sikkim</small>Himalayan Peaks</div>
-    </div>
-    <div class="mg mg4 rv d3">
-      <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=85" alt="Monastery">
-      <div class="mg-cap"><small>Arunachal</small>Tawang Monastery</div>
-    </div>
-    <div class="mg mg5 rv d4">
-      <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=700&q=85" alt="River">
-      <div class="mg-cap"><small>Meghalaya</small>Dawki Crystal River</div>
+  <!-- FULL BLEED FEATURE -->
+  <div class="full-bleed reveal">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Tawang_Monastery_3.jpg/1280px-Tawang_Monastery_3.jpg" alt="Tawang Monastery, Arunachal Pradesh">
+    <div class="full-bleed-veil"></div>
+    <div class="full-bleed-body">
+      <div class="eyebrow" style="justify-content:center;opacity:1;animation:none;">Ancient Himalayan Heritage</div>
+      <h2>Tawang <em>Monastery</em><br>Trail</h2>
+      <div class="full-bleed-pills">
+        <span class="pill">6 Nights / 7 Days</span>
+        <span class="pill">Small Groups</span>
+        <span class="pill">Expert Guides</span>
+        <span class="pill">Arunachal Pradesh</span>
+      </div>
+      <div style="margin-top:32px;">
+        <button class="btn-gold" onclick="goPage('packages')">View Package — ₹38,000</button>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- EXPERIENCES -->
-<section class="exp-sec" id="experiences">
-  <div class="rv">
-    <p class="lbl">What We Offer</p>
-    <h2 class="sh">Experiences That<br><em>Define</em> You</h2>
-  </div>
-  <div class="exp-grid">
-    <div class="eg rv">
-      <div class="eg-icon">🦏</div>
-      <div class="eg-name">Wildlife Safaris</div>
-      <div class="eg-txt">Jeep safaris through Kaziranga, Manas & Namdapha. Track one-horned rhinos, Royal Bengal tigers & rare clouded leopards at dawn.</div>
+  <!-- PHOTO MOSAIC -->
+  <div class="mosaic">
+    <div class="mosaic-item m1">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg/800px-One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg" alt="Kaziranga Rhino">
     </div>
-    <div class="eg rv d1">
-      <div class="eg-icon">🏔️</div>
-      <div class="eg-name">Mountain Treks</div>
-      <div class="eg-txt">Trek Dzongri, Goecha La & remote Mechuka Valley. Himalayan vistas that will permanently reset your perspective on life.</div>
+    <div class="mosaic-item m2">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Gangtok_City%2C_Sikkim%2C_India.jpg/800px-Gangtok_City%2C_Sikkim%2C_India.jpg" alt="Gangtok Sikkim">
     </div>
-    <div class="eg rv d2">
-      <div class="eg-icon">🎭</div>
-      <div class="eg-name">Cultural Immersion</div>
-      <div class="eg-txt">Live with Naga tribes, witness Bihu dances, attend Hornbill & Sangai festivals. Culture is our most powerful destination.</div>
+    <div class="mosaic-item m3">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dawki_River_in_Meghalaya.jpg/800px-Dawki_River_in_Meghalaya.jpg" alt="Dawki River Meghalaya">
     </div>
-    <div class="eg rv d3">
-      <div class="eg-icon">🌿</div>
-      <div class="eg-name">Offbeat Trails</div>
-      <div class="eg-txt">Floating villages, zero-light skies, living root bridges. The Northeast holds India's most untouched road-less-travelled corners.</div>
+    <div class="mosaic-item m4">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Loktak_Lake_manipur.jpg/800px-Loktak_Lake_manipur.jpg" alt="Loktak Lake Manipur">
+    </div>
+    <div class="mosaic-item m5">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Dzukou_Valley_Nagaland.jpg/800px-Dzukou_Valley_Nagaland.jpg" alt="Dzukou Valley Nagaland">
     </div>
   </div>
-</section>
 
-<!-- TESTIMONIALS -->
-<section class="testi-sec">
-  <div class="rv">
-    <p class="lbl">Traveller Stories</p>
-    <h2 class="sh">Voices from the <em>Journey</em></h2>
-  </div>
-  <div class="testi-grid">
-    <div class="tc rv">
-      <div class="tc-stars">★★★★★</div>
-      <p class="tc-q">"The Meghalaya trip was unlike anything I've ever experienced. Living root bridges, crystal rivers, and our guide knew every hidden trail. Northeast Navigator gave us a memory, not just a trip."</p>
-      <div class="tc-name">Priya Sharma</div>
-      <div class="tc-loc">Delhi · Solo Traveller</div>
+  <!-- EXPERIENCES -->
+  <section class="reveal" style="padding-top:0;">
+    <div class="sec-label">What We Offer</div>
+    <h2 class="sec-title">Curated <em>Experiences</em></h2>
+    <div class="exp-grid">
+      <div class="exp-card">
+        <div class="exp-icon">🦏</div>
+        <div class="exp-name">Wildlife Safaris</div>
+        <div class="exp-desc">Jeep safaris in Kaziranga for the great one-horned rhino, elephant rides, and bird-watching in Manas National Park.</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">⛰️</div>
+        <div class="exp-name">Mountain Treks</div>
+        <div class="exp-desc">Trek through Dzukou Valley, Ziro Valley, Sandakphu ridge, and Tawang's high-altitude passes.</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">🎭</div>
+        <div class="exp-name">Cultural Immersion</div>
+        <div class="exp-desc">Hornbill Festival, Bihu celebrations, tribal homestays, and traditional Manipuri dance performances.</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">🗺️</div>
+        <div class="exp-name">Offbeat Trails</div>
+        <div class="exp-desc">Explore Majuli — world's largest river island, Phawngpui Blue Mountain, and Unakoti rock carvings.</div>
+      </div>
     </div>
-    <div class="tc rv d1">
-      <div class="tc-stars">★★★★★</div>
-      <p class="tc-q">"Kaziranga at dawn with rhinos grazing in the mist — I still can't believe it was real. Every detail handled perfectly. This company understands the Northeast like nobody else."</p>
-      <div class="tc-name">Rahul & Sneha Mehta</div>
-      <div class="tc-loc">Bengaluru · Couple</div>
-    </div>
-    <div class="tc rv d2">
-      <div class="tc-stars">★★★★★</div>
-      <p class="tc-q">"Attended Hornbill Festival through their package. Staying with a Naga family, attending ceremonies — the cultural access was extraordinary. Absolutely worth every rupee."</p>
-      <div class="tc-name">Ankit Bose</div>
-      <div class="tc-loc">Kolkata · Family Group</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- SEARCH BAR -->
-<div class="search-bar-sec">
-  <div class="sb-inner rv">
-    <h2 class="sb-h">Find Your Perfect Journey</h2>
-    <p class="sb-sub">Tell us where you want to go — we'll handle everything else.</p>
-    <div class="sb-form">
-      <select>
-        <option value="">Select Destination</option>
+  <!-- TESTIMONIALS -->
+  <section class="reveal" style="background:var(--forest);margin:0 -0px;">
+    <div class="sec-label">Traveller Stories</div>
+    <h2 class="sec-title">What Our <em>Guests</em> Say</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Kaziranga was a dream. Seeing three rhinos in the wild on our very first morning — nothing could have prepared us for that. Northeast Navigator handled every detail perfectly."</div>
+        <div class="testi-author">Priya & Rohit Sharma</div>
+        <div class="testi-from">Mumbai · Kaziranga & Majuli Tour</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"The Dawki River is surreal — crystal clear water, the boat gliding over the riverbed. Meghalaya exceeded every expectation. The living root bridges in Cherrapunji were breathtaking."</div>
+        <div class="testi-author">Arjun Mehta</div>
+        <div class="testi-from">Bangalore · Meghalaya Explorer 5N/6D</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Attending the Hornbill Festival in Nagaland was one of the most incredible cultural experiences of my life. The tribal performances, the food, the warmth of Naga people — unforgettable."</div>
+        <div class="testi-author">Kavya Nair</div>
+        <div class="testi-from">Delhi · Nagaland Hornbill Special</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH BANNER -->
+  <div class="search-banner reveal">
+    <div class="search-label">Find Your Perfect Northeast India Journey</div>
+    <div class="search-bar">
+      <select class="search-select" id="ss-dest">
+        <option value="">Choose Destination State</option>
         <option>Assam</option><option>Meghalaya</option><option>Arunachal Pradesh</option>
         <option>Nagaland</option><option>Sikkim</option><option>Manipur</option>
-        <option>Mizoram</option><option>Tripura</option><option>Multi-State Tour</option>
+        <option>Mizoram</option><option>Tripura</option>
       </select>
-      <select>
+      <select class="search-select" id="ss-type">
+        <option value="">Tour Type</option>
+        <option>Adventure</option><option>Wildlife</option><option>Cultural</option>
+        <option>Spiritual</option><option>Offbeat</option>
+      </select>
+      <select class="search-select" id="ss-dur">
         <option value="">Duration</option>
-        <option>3–5 Days</option><option>6–8 Days</option>
-        <option>9–12 Days</option><option>13+ Days</option>
+        <option>3–5 Days</option><option>6–8 Days</option><option>9–12 Days</option><option>13+ Days</option>
       </select>
-      <select>
-        <option value="">Travel Type</option>
-        <option>Solo</option><option>Couple / Honeymoon</option>
-        <option>Family</option><option>Group</option>
-      </select>
-      <button>Search Packages →</button>
+      <button class="search-btn" onclick="goPage('packages')">Search Tours →</button>
     </div>
   </div>
+
+</div><!-- /page-home -->
+
+
+<!-- ═══════════════════ PACKAGES PAGE ═══════════════════ -->
+<div class="page" id="page-packages">
+  <div class="page-header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Dzukou_Valley_Nagaland.jpg/1280px-Dzukou_Valley_Nagaland.jpg" alt="Northeast India landscapes">
+    <div class="page-header-veil"></div>
+    <div class="page-header-body">
+      <div class="eyebrow">Northeast India</div>
+      <h1>Our <em>Tour</em><br>Packages</h1>
+    </div>
+  </div>
+  <section>
+    <div class="pkg-filters" id="pkg-filters">
+      <button class="filter-btn active" data-filter="All" onclick="filterPkgs(this,'All')">All Packages</button>
+      <button class="filter-btn" data-filter="Adventure" onclick="filterPkgs(this,'Adventure')">Adventure</button>
+      <button class="filter-btn" data-filter="Wildlife" onclick="filterPkgs(this,'Wildlife')">Wildlife</button>
+      <button class="filter-btn" data-filter="Cultural" onclick="filterPkgs(this,'Cultural')">Cultural</button>
+      <button class="filter-btn" data-filter="Spiritual" onclick="filterPkgs(this,'Spiritual')">Spiritual</button>
+      <button class="filter-btn" data-filter="Offbeat" onclick="filterPkgs(this,'Offbeat')">Offbeat</button>
+    </div>
+    <div class="pkg-grid" id="all-pkgs"></div>
+  </section>
 </div>
 
-<!-- ABOUT -->
-<section class="about-sec" id="about">
-  <div class="about-photos rv">
-    <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=600&q=85" alt="forest">
-    <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=85" alt="river">
-    <img src="https://images.unsplash.com/photo-1521651201144-634f700b36ef?w=600&q=85" alt="wildlife">
-    <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=85" alt="temple">
+
+<!-- ═══════════════════ ABOUT PAGE ═══════════════════ -->
+<div class="page" id="page-about">
+  <div class="page-header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Gangtok_City%2C_Sikkim%2C_India.jpg/1280px-Gangtok_City%2C_Sikkim%2C_India.jpg" alt="Northeast India">
+    <div class="page-header-veil"></div>
+    <div class="page-header-body">
+      <div class="eyebrow">Our Story</div>
+      <h1>About <em>Northeast</em><br>Navigator</h1>
+    </div>
   </div>
-  <div class="about-txt">
-    <div class="rv">
-      <p class="lbl">About Us</p>
-      <h2 class="sh">Your Guide to the <em>Northeast</em></h2>
-      <p>Northeast Navigator was founded in Guwahati by third-generation locals who grew up trekking these forests and attending tribal festivals. Every itinerary is designed by people with lived experience of these roads, rivers, and cultures.</p>
-      <ul class="about-list">
-        <li>Government-approved & IATA-certified travel operator</li>
-        <li>In-house naturalists, cultural guides & trek leaders</li>
-        <li>24/7 local support — our team lives where you visit</li>
-        <li>Responsible tourism that gives back to local communities</li>
-        <li>Fully customizable for every budget & group size</li>
+  <section>
+    <div class="about-grid">
+      <div class="about-imgs reveal">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg/800px-One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg" alt="Kaziranga">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dawki_River_in_Meghalaya.jpg/800px-Dawki_River_in_Meghalaya.jpg" alt="Meghalaya">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Dzukou_Valley_Nagaland.jpg/800px-Dzukou_Valley_Nagaland.jpg" alt="Nagaland">
+      </div>
+      <div class="about-text reveal">
+        <div class="sec-label">Who We Are</div>
+        <h2 class="sec-title">Born in the <em>Northeast,</em><br>for the Northeast</h2>
+        <p style="margin-top:24px;">Northeast Navigator is a Guwahati-based travel company built by people who grew up here — who know the difference between tourist spots and real experiences. We've spent over a decade mapping the Northeast so you can experience it the way locals do.</p>
+        <p>We cover all eight states of Northeast India with carefully designed itineraries for every kind of traveller — from wilderness seekers to culture enthusiasts, festival goers to spiritual sojourners. Our local guides are natives of each state, ensuring you experience authentic stories, not packaged performances.</p>
+        <p>We believe the Northeast is India's most extraordinary region — and one of the world's most underrated destinations. Our mission is to share it with the world while supporting local communities and preserving its fragile ecosystems.</p>
+        <div class="about-values">
+          <div class="val-item">
+            <div class="val-title">Local Expertise</div>
+            <div class="val-desc">Every guide is a native of the state they lead in. Real knowledge, real stories.</div>
+          </div>
+          <div class="val-item">
+            <div class="val-title">Small Groups</div>
+            <div class="val-desc">Maximum 12 per group. Personal attention and minimal environmental impact.</div>
+          </div>
+          <div class="val-item">
+            <div class="val-title">Responsible Tourism</div>
+            <div class="val-desc">We partner with local homestays, tribal artisans, and community cooperatives.</div>
+          </div>
+          <div class="val-item">
+            <div class="val-title">Permit Support</div>
+            <div class="val-desc">We handle all Inner Line Permits for Arunachal, Nagaland, and Manipur.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section style="background:var(--forest);">
+    <div class="reveal">
+      <div class="sec-label">The People Behind Northeast Navigator</div>
+      <h2 class="sec-title">Meet Our <em>Team</em></h2>
+    </div>
+    <div class="team-grid reveal">
+      <div class="team-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Gangtok_City%2C_Sikkim%2C_India.jpg/400px-Gangtok_City%2C_Sikkim%2C_India.jpg" alt="Founder" class="team-img">
+        <div class="team-name">Bipul Hazarika</div>
+        <div class="team-role">Founder & Lead Guide · Assam</div>
+      </div>
+      <div class="team-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dawki_River_in_Meghalaya.jpg/400px-Dawki_River_in_Meghalaya.jpg" alt="Co-founder" class="team-img">
+        <div class="team-name">Pynbianmerry Khongwir</div>
+        <div class="team-role">Co-Founder · Meghalaya Expert</div>
+      </div>
+      <div class="team-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Tawang_Monastery_3.jpg/400px-Tawang_Monastery_3.jpg" alt="Guide" class="team-img">
+        <div class="team-name">Tashi Dorje</div>
+        <div class="team-role">Senior Guide · Arunachal & Sikkim</div>
+      </div>
+      <div class="team-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Dzukou_Valley_Nagaland.jpg/400px-Dzukou_Valley_Nagaland.jpg" alt="Guide" class="team-img">
+        <div class="team-name">Vizo Angami</div>
+        <div class="team-role">Cultural Lead · Nagaland Expert</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- ═══════════════════ CONTACT PAGE ═══════════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Loktak_Lake_manipur.jpg/1280px-Loktak_Lake_manipur.jpg" alt="Loktak Lake">
+    <div class="page-header-veil"></div>
+    <div class="page-header-body">
+      <div class="eyebrow">Get In Touch</div>
+      <h1>Plan Your <em>Northeast</em><br>Journey</h1>
+    </div>
+  </div>
+  <section>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>We're based in the<br>heart of Northeast India.</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:40px;">Have questions about a specific package? Want to customise your itinerary? Or just want to know more about travelling in Northeast India? We're here.</p>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail-text">
+            <label>Head Office</label>
+            <p>GS Road, Ulubari,<br>Guwahati – 781007, Assam</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail-text">
+            <label>Phone / WhatsApp</label>
+            <p>+91 98640 12345<br>+91 70860 98765</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-detail-text">
+            <label>Email</label>
+            <p>hello@northeastnavigator.in<br>bookings@northeastnavigator.in</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-detail-text">
+            <label>Office Hours</label>
+            <p>Mon – Sat: 9:00 AM – 7:00 PM IST<br>Sunday: 10:00 AM – 3:00 PM IST</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="contact-form">
+          <div class="form-title">Send Us a Message</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="Your first name">
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Your last name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" placeholder="+91 XXXXX XXXXX">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Destination State</label>
+            <select>
+              <option value="">Select a destination</option>
+              <option>Assam</option><option>Meghalaya</option><option>Arunachal Pradesh</option>
+              <option>Nagaland</option><option>Sikkim</option><option>Manipur</option>
+              <option>Mizoram</option><option>Tripura</option><option>Multi-State Tour</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Travel Dates</label>
+            <input type="text" placeholder="e.g. October 10 – October 18, 2025">
+          </div>
+          <div class="form-group">
+            <label>Group Size</label>
+            <select>
+              <option>Solo Traveller</option><option>2 Persons</option><option>3–5 Persons</option>
+              <option>6–10 Persons</option><option>11–20 Persons</option><option>Large Group (20+)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Your Message</label>
+            <textarea placeholder="Tell us about your dream Northeast India trip..."></textarea>
+          </div>
+          <button class="form-submit">Send Enquiry →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- ═══════════════════ FOOTER (ALL PAGES) ═══════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo" style="cursor:default;">
+        <div class="logo-icon" style="width:34px;height:34px;font-size:15px;">🧭</div>
+        <span class="logo-name" style="font-size:16px;">NORTHEAST <span>NAVIGATOR</span></span>
+      </div>
+      <p>Authentic Northeast India tours crafted by locals. Based in Guwahati. Exploring all 8 states since 2012.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="#" onclick="filterAndGo('Assam');return false;">Assam</a></li>
+        <li><a href="#" onclick="filterAndGo('Meghalaya');return false;">Meghalaya</a></li>
+        <li><a href="#" onclick="filterAndGo('Arunachal');return false;">Arunachal Pradesh</a></li>
+        <li><a href="#" onclick="filterAndGo('Nagaland');return false;">Nagaland</a></li>
+        <li><a href="#" onclick="filterAndGo('Sikkim');return false;">Sikkim</a></li>
+        <li><a href="#" onclick="filterAndGo('Manipur');return false;">Manipur</a></li>
       </ul>
     </div>
-    <div style="margin-top:40px;" class="rv d2">
-      <a href="#contact" class="btn-fill">Plan My Trip ↗</a>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#" onclick="goPage('home');return false;">Home</a></li>
+        <li><a href="#" onclick="goPage('packages');return false;">All Packages</a></li>
+        <li><a href="#" onclick="goPage('about');return false;">About Us</a></li>
+        <li><a href="#" onclick="goPage('contact');return false;">Contact</a></li>
+        <li><a href="#">Inner Line Permits</a></li>
+        <li><a href="#">Travel Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">GS Road, Ulubari, Guwahati</a></li>
+        <li><a href="#">+91 98640 12345</a></li>
+        <li><a href="#">hello@northeastnavigator.in</a></li>
+        <li><a href="#">Mon–Sat: 9AM – 7PM IST</a></li>
+      </ul>
     </div>
   </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact-sec" id="contact">
-  <div class="rv">
-    <p class="lbl">Get In Touch</p>
-    <h2 class="sh">Let's Plan Your<br><em>Adventure</em> Together</h2>
-  </div>
-  <div class="contact-grid">
-    <div class="rv">
-      <div class="cfield"><label>Full Name</label><input type="text" placeholder="Your full name"></div>
-      <div class="cfield"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
-      <div class="cfield"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"></div>
-      <div class="cfield">
-        <label>Destination</label>
-        <select>
-          <option value="">Select a State</option>
-          <option>Assam</option><option>Meghalaya</option><option>Arunachal Pradesh</option>
-          <option>Nagaland</option><option>Sikkim</option><option>Manipur</option>
-          <option>Mizoram</option><option>Tripura</option><option>Multi-State Tour</option>
-        </select>
-      </div>
-      <div class="cfield"><label>Tell Us About Your Dream Trip</label><textarea rows="4" placeholder="Group size, preferred dates, interests..."></textarea></div>
-      <button class="btn-fill" style="width:100%;justify-content:center;">Send Enquiry →</button>
+  <div class="footer-bottom">
+    <p>© 2025 Northeast Navigator Tours & Travels. All rights reserved.</p>
+    <div class="footer-socials">
+      <div class="soc">f</div>
+      <div class="soc">in</div>
+      <div class="soc">tw</div>
+      <div class="soc">yt</div>
     </div>
-    <div class="rv d2">
-      <div class="cinfo-item"><div class="ci-lbl">Headquarters</div><div class="ci-val">GS Road, Ulubari<br>Guwahati, Assam – 781007, India</div></div>
-      <div class="cinfo-item"><div class="ci-lbl">Call Us</div><div class="ci-val">+91 98765 43210<br>+91 80000 12345<br>Toll Free: 1800-XXX-XXXX</div></div>
-      <div class="cinfo-item"><div class="ci-lbl">Email</div><div class="ci-val">info@northeastnavigator.in<br>bookings@northeastnavigator.in</div></div>
-      <div class="cinfo-item"><div class="ci-lbl">Working Hours</div><div class="ci-val">Monday – Saturday<br>9:00 AM – 7:00 PM IST</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="foot-grid">
-    <div class="foot-brand">
-      <a href="#" class="logo">
-        <div class="logo-mark">🧭</div>
-        <span class="logo-name">NORTHEAST <span>NAVIGATOR</span></span>
-      </a>
-      <p>India's most authentic Northeast travel company — built by people who call these hills home. Crafting unforgettable journeys since 2014.</p>
-    </div>
-    <div class="foot-col">
-      <h5>Destinations</h5>
-      <a href="#">Assam</a><a href="#">Meghalaya</a><a href="#">Arunachal Pradesh</a>
-      <a href="#">Nagaland</a><a href="#">Sikkim</a><a href="#">Manipur</a>
-      <a href="#">Mizoram</a><a href="#">Tripura</a>
-    </div>
-    <div class="foot-col">
-      <h5>Tour Types</h5>
-      <a href="#">Wildlife Safaris</a><a href="#">Mountain Treks</a>
-      <a href="#">Cultural Tours</a><a href="#">Honeymoon Special</a>
-      <a href="#">Festival Tours</a><a href="#">Family Packages</a>
-      <a href="#">Corporate Retreats</a>
-    </div>
-    <div class="foot-col">
-      <h5>Company</h5>
-      <a href="#">About Us</a><a href="#">Blog</a>
-      <a href="#">Testimonials</a><a href="#">Contact</a>
-      <a href="#">Privacy Policy</a><a href="#">Terms & Conditions</a>
-    </div>
-  </div>
-  <div class="foot-bot">
-    <span>© 2025 Northeast Navigator Tours & Travels Pvt. Ltd. All rights reserved.</span>
-    <span>Made with ♥ in Guwahati, Assam 🌿</span>
   </div>
 </footer>
 
 <script>
-// CURSOR
-const C1=document.getElementById('C1'),C2=document.getElementById('C2');
+// ── CURSOR ──────────────────────────────────────────
+const dot = document.getElementById('cur-dot');
+const ring = document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  C1.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;
-});
-(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;C2.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;requestAnimationFrame(loop);})();
-document.querySelectorAll('a,button,.scard,.pk,.eg,.tc,.istat,.mg').forEach(el=>{
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx}px,${my}px) translate(-50%,-50%)`;});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.state-card,.pkg-card,.exp-card,.testi-card,.soc').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
 });
 
-// NAV
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('stuck',scrollY>70));
+// ── NAV SCROLL ───────────────────────────────────────
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>60));
 
-// HERO SLIDESHOW
-const slides=document.querySelectorAll('.slide');
-const dots=document.querySelectorAll('.hd');
-const hcur=document.getElementById('hcur');
-let cur=0;
-function goSlide(n){
-  slides[cur].classList.remove('on');dots[cur].classList.remove('on');
-  cur=n;
-  slides[cur].classList.add('on');dots[cur].classList.add('on');
-  hcur.textContent=String(cur+1).padStart(2,'0');
+// ── PACKAGES DATA ────────────────────────────────────
+const PACKAGES = [
+  {
+    id:1, state:'Assam', tag:'Wildlife', name:'Kaziranga & Majuli River Island',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg/800px-One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg',
+    nights:4, days:5, persons:'2–12', price:'₹24,999',
+    desc:'Jeep safaris at Kaziranga National Park, elephant rides, visit to Majuli — world\'s largest river island.'
+  },
+  {
+    id:2, state:'Meghalaya', tag:'Adventure', name:'Living Root Bridges & Dawki River',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dawki_River_in_Meghalaya.jpg/800px-Dawki_River_in_Meghalaya.jpg',
+    nights:4, days:5, persons:'2–10', price:'₹19,500',
+    desc:'Trek to double-decker root bridges in Cherrapunji, boat on crystal-clear Dawki River, Mawlynnong village.'
+  },
+  {
+    id:3, state:'Arunachal', tag:'Spiritual', name:'Tawang Monastery Trail',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Tawang_Monastery_3.jpg/800px-Tawang_Monastery_3.jpg',
+    nights:6, days:7, persons:'2–10', price:'₹38,000',
+    desc:'Visit Asia\'s largest Buddhist monastery at Tawang, Sela Pass, Nuranang Falls, and the war memorial.'
+  },
+  {
+    id:4, state:'Nagaland', tag:'Cultural', name:'Hornbill Festival Special',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Dzukou_Valley_Nagaland.jpg/800px-Dzukou_Valley_Nagaland.jpg',
+    nights:5, days:6, persons:'2–15', price:'₹22,000',
+    desc:'Attend the iconic Hornbill Festival in Kisama Heritage Village, explore Kohima War Cemetery, and Dzukou Valley.'
+  },
+  {
+    id:5, state:'Sikkim', tag:'Adventure', name:'Gangtok, Lachung & Yumthang Valley',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Gangtok_City%2C_Sikkim%2C_India.jpg/800px-Gangtok_City%2C_Sikkim%2C_India.jpg',
+    nights:5, days:6, persons:'2–12', price:'₹32,500',
+    desc:'Explore Gangtok city, drive to Lachung, Valley of Flowers at Yumthang, and Zero Point at 15,000 ft.'
+  },
+  {
+    id:6, state:'Manipur', tag:'Wildlife', name:'Loktak Lake & Sangai Deer Safari',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Loktak_Lake_manipur.jpg/800px-Loktak_Lake_manipur.jpg',
+    nights:4, days:5, persons:'2–10', price:'₹21,000',
+    desc:'Boat through Loktak Lake\'s floating phumdis, sight the endangered Sangai deer, and explore Imphal heritage.'
+  },
+  {
+    id:7, state:'Mizoram', tag:'Offbeat', name:'Aizawl & Phawngpui Blue Mountain',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aizawl_from_the_air.jpg/800px-Aizawl_from_the_air.jpg',
+    nights:5, days:6, persons:'2–10', price:'₹26,000',
+    desc:'Explore Aizawl\'s dramatic hillside city, trek to Phawngpui — highest peak in Mizoram, tribal village homestays.'
+  },
+  {
+    id:8, state:'Tripura', tag:'Cultural', name:'Neermahal Water Palace & Ujjayanta',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Neermahal_tripura.jpg/800px-Neermahal_tripura.jpg',
+    nights:3, days:4, persons:'2–15', price:'₹14,500',
+    desc:'Visit Neermahal — the only water palace in Eastern India, Ujjayanta Palace museum, and Unakoti rock carvings.'
+  },
+  {
+    id:9, state:'Assam', tag:'Offbeat', name:'Majuli Island Cultural Immersion',
+    img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg/800px-One_horned_rhino_grazing%2C_Kaziranga_%281%29.jpg',
+    nights:3, days:4, persons:'2–8', price:'₹16,500',
+    desc:'Stay in a Satra monastery on Majuli, participate in Vaishnavite festivals, and witness mask-making traditions.'
+  },
+];
+
+// ── CARD RENDERER ────────────────────────────────────
+function makeCard(pkg){
+  return `<div class="pkg-card" data-tag="${pkg.tag}" data-state="${pkg.state}">
+    <div class="pkg-img-wrap">
+      <img class="pkg-img" src="${pkg.img}" alt="${pkg.name}" loading="lazy">
+      <span class="pkg-tag">${pkg.tag}</span>
+    </div>
+    <div class="pkg-body">
+      <div class="pkg-state">${pkg.state}</div>
+      <div class="pkg-name">${pkg.name}</div>
+      <div class="pkg-meta">
+        <span>🌙 ${pkg.nights}N/${pkg.days}D</span>
+        <span>👥 ${pkg.persons} pax</span>
+      </div>
+      <div class="pkg-price"><strong>${pkg.price}</strong><span>per person</span></div>
+      <button class="pkg-book" onclick="goPage('contact')">Book This Tour</button>
+    </div>
+  </div>`;
 }
-setInterval(()=>goSlide((cur+1)%slides.length),5500);
-dots.forEach((d,i)=>d.addEventListener('click',()=>goSlide(i)));
 
-// SCROLL REVEAL
-const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');}),{threshold:0.1});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+// Render home (first 6)
+document.getElementById('home-pkgs').innerHTML = PACKAGES.slice(0,6).map(makeCard).join('');
+// Render all packages
+document.getElementById('all-pkgs').innerHTML = PACKAGES.map(makeCard).join('');
 
-// PACKAGE FILTER
-function filterPkg(btn,cat){
-  document.querySelectorAll('.pf').forEach(b=>b.classList.remove('active'));
+// ── FILTER PACKAGES ──────────────────────────────────
+let activeState = null;
+function filterPkgs(btn, filter){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.pk').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';});
+  const cards = document.querySelectorAll('#all-pkgs .pkg-card');
+  cards.forEach(c=>{
+    const show = filter==='All' || c.dataset.tag===filter || (activeState && c.dataset.state.includes(activeState));
+    c.style.display = (filter==='All' && !activeState) ? '' : (c.dataset.tag===filter || (activeState && c.dataset.state.includes(activeState) && (filter==='All' || c.dataset.tag===filter))) ? '' : 'none';
+  });
+  if(filter==='All' && !activeState){ cards.forEach(c=>c.style.display=''); }
 }
+
+function filterAndGo(state){
+  activeState = state;
+  goPage('packages');
+  setTimeout(()=>{
+    const cards = document.querySelectorAll('#all-pkgs .pkg-card');
+    cards.forEach(c=>c.style.display=c.dataset.state.includes(state)?'':'none');
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelector('[data-filter="All"]').classList.add('active');
+  }, 100);
+}
+
+// ── PAGE ROUTING ─────────────────────────────────────
+function goPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{
+    a.classList.toggle('active', a.dataset.page===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  // Re-run reveals
+  setTimeout(initReveal, 200);
+}
+
+// ── HERO SLIDESHOW ───────────────────────────────────
+const slides = document.querySelectorAll('.slide');
+const sdNav = document.getElementById('slide-nav');
+let cur=0;
+slides.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='sd'+(i===0?' on':'');
+  d.onclick=()=>toSlide(i);
+  sdNav.appendChild(d);
+});
+function toSlide(n){
+  slides[cur].classList.remove('on');
+  document.querySelectorAll('.sd')[cur].classList.remove('on');
+  cur=n;
+  slides[cur].classList.add('on');
+  document.querySelectorAll('.sd')[cur].classList.add('on');
+}
+setInterval(()=>toSlide((cur+1)%slides.length), 5500);
+
+// ── SCROLL REVEAL ────────────────────────────────────
+function initReveal(){
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');}});
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal:not(.vis)').forEach(el=>obs.observe(el));
+}
+initReveal();
 </script>
 </body>
 </html>
